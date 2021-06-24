@@ -1,6 +1,39 @@
+server:
+  port: 8000
+  servlet:
+    context-path: /blog #내 프로젝트의 기본경로를 설정
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+#서버설정을 하지 않는다면 기본 서버세팅인 port:8080으로 세팅됨.
+    
 spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+#mysql 드라이버 설정       
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Seoul
     username: cos
     password: cos1234
+    
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create                            #update()/none/create(새로만듬,최초에만 설정) 가능
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl  #엔티티(테이블)을 만들때 변수명 그대로 컬럼을 만듬.
+      use-new-id-generator-mappings: false #JPA가 사용하는 기본넘버링 전략을 따라가지 않음.
+    show-sql: true                                #콘솔창에 쿼리 로그가 찍힘.
+    properties:
+      hibernate.format_sql: true         #쿼리가 이쁘게 찍힘.
+
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+ 
+#파일 수정시 Auto-Reload 설정. (+ pom.xml에도 추가 필요.)    devtools:    livereload:      enabled: true
